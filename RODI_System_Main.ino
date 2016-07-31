@@ -40,12 +40,14 @@ void loop()
 
   float distToWater;  //Distance in mm
   distToWater = HCSR04Read(trigPin,echoPin);
+  float percent;
+  percent = WaterLevelPercent (TankHeight, distToWater);
   
-  Serial.print("mm: ");
-  Serial.print(distToWater);
-  Serial.println();
-  Serial.println();
+  //Serial.print("mm: ");
+  //Serial.print(distToWater);
+  //Serial.println();
+  //Serial.println();
   
-  delay(250);
+  //delay(250);
 
 }
