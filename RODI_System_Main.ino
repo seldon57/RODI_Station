@@ -1,12 +1,12 @@
 
 
-int trigPin;    //Pin on Arduino that will be used to trigger the HC-SR04
-int echoPin;    //Pin on Arduino that will be used to echo the HC-SR04
-int PressureSwitchPin;
+const int trigPin;    //Pin on Arduino that will be used to trigger the HC-SR04
+const int echoPin;    //Pin on Arduino that will be used to echo the HC-SR04
+const int PressureSwitchPin;
 
-float HCSR04Read(int x,int y);
 float TankHeight = 850;	// Height of the tank in mm from the bottom to the sensor
-float TankLevel = 0;	// Calculated height of the water in the tank
+float HCSR04Read(int x,int y);
+float WaterLevelPercent (float a, float b);
 
 bool PressureSwitchRead(int PressureSwitchPin);
 
