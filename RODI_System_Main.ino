@@ -1,4 +1,11 @@
-
+/*
+* created by seldon on RC
+* 
+* Automated RODI Filling Station
+*
+* 55 Gallon Drum Level Monitoring Using Ultrasonic Sensor HC-SR04
+*
+*/
 
 const int trigPin;    //Pin on Arduino that will be used to trigger the HC-SR04
 const int echoPin;    //Pin on Arduino that will be used to echo the HC-SR04
