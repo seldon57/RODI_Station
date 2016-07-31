@@ -1,0 +1,18 @@
+1. SaltWater_Mixing_Station
+2. Sensors/Input
+	a. HC-SR04 for RODI
+	b. HC-SR04 for SaltWater
+	c. Pressure Switch for RODI
+3. Outlets/Output
+	a. Relay Board
+4. Virtual Outlets
+5. Tank Level
+	a. Low/LowLow
+	b. High/HighHigh
+6. RODI System
+	a. System Off
+	b. System Initial
+	c. System Flush
+	d. System Running
+7. Smoothing
+8. % level
