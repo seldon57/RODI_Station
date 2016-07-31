@@ -17,6 +17,8 @@ float WaterLevelPercent (float a, float b);
 
 bool PressureSwitchRead(int PressureSwitchPin);
 
+void SerialDiagnostics(float value1);
+
 void setup() 
 {
 
@@ -42,12 +44,15 @@ void loop()
   distToWater = HCSR04Read(trigPin,echoPin);
   float percent;
   percent = WaterLevelPercent (TankHeight, distToWater);
+
+  SerialDiagnostics(distToWater);
+
+
   
   //Serial.print("mm: ");
   //Serial.print(distToWater);
   //Serial.println();
   //Serial.println();
-  
   //delay(250);
 
 }
