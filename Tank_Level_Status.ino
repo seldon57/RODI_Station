@@ -1,4 +1,4 @@
-int TankLevel(int level, float percent)
+int TankLevelStatus(int level, float percent)
 {
   int LowLow   = 1;
   int Low      = 2;
