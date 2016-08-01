@@ -1,10 +1,10 @@
-int TankLevel(){
-
-  //Measure the water level in the tank
-  int WaterLevel = HCSR04Read(trigPin,echoPin);
-  
-  //Calculate the water level in the tank
-  WaterLevel = TankHeight - WaterLevel;
+int TankLevel(int level, float percent)
+{
+  int LowLow   = 1;
+  int Low      = 2;
+  int Normal   = 3;
+  int High     = 4;
+  int HighHigh = 5;
   
   //14.2875 mm equals 1 gallon
 
