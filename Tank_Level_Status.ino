@@ -1,10 +1,5 @@
-int TankLevelStatus(int level, float percent, float distance)
+int TankLevelStatus(TankStatus level, float percent, float distance)
 {
-  int LowLow   = 1;
-  int Low      = 2;
-  int Normal   = 3;
-  int High     = 4;
-  int HighHigh = 5;
   
   //14.2875 mm equals 1 gallon
 
