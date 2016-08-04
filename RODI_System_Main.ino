@@ -21,6 +21,23 @@ bool PressureSwitchRead(int PressureSwitchPin);
 
 void SerialDiagnostics(float value1);
 
+enum TankStatus
+{
+    TANKSTATUS_LOWLOW,
+    TANKSTATUS_LOW,
+    TANKSTATUS_NORMAL,
+    TANKSTATUS_HIGH,
+    TANKSTATUS_HIGHHIGH
+};
+
+enum RODIStatus
+{
+    RODISTATUS_OFF,
+    RODISTATUS_INITIALFLUSH,
+    RODISTATUS_FLUSHING,
+    RODISTATUS_RUNNING
+};
+
 void setup() 
 {
 
