@@ -1,4 +1,4 @@
-int TankLevelStatus(TankStatus level, float percent, float distance)
+TankStatus TankLevelStatus(TankStatus level, float percent, float distance)
 {
   
   //14.2875 mm equals 1 gallon
