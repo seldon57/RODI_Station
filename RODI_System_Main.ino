@@ -15,7 +15,7 @@ TankStatus TankLevelStatus(TankStatus level, float percent, float distToWater);
 
 float TankHeight = 850.0;	// Height of the tank in mm from the bottom to the sensor
 float HCSR04Read(int trigPin,int echoPin);
-float WaterLevelPercent (float a, float b);
+float WaterLevelPercent (float TankHeight, float WaterDistance);
 
 bool PressureSwitchRead(int PressureSwitchPin);
 
