@@ -35,7 +35,7 @@ void RODISystemStatus(RODIStatus status)
 TankLevel
 status
 
-Initialize status and initialStatus
+Initialize status and initialStatus to off
 
 if(initialStatus != status)
   initialtime = now();
@@ -43,102 +43,62 @@ if(initialStatus != status)
 TankLevelStatus = TankStatusRead();
 PressureSwitch = PressureSwitchRead();
 
-if(TankLevelStatus == High)
-    status = RODISTATUS_OFF; 
-if(TankLevelStatus == HighHigh)
-    status = RODISTATUS_OFF;
-if(PressureSwitch == true)
-    status = RODISTATUS_OFF;
-    RODISystemStatus(status);
+if(TankLevelStatus == High || TankLevelStatus == HighHigh || PressureSwitch == true)
+{
+  status = RODISTATUS_OFF;
+  RODISystemStatus(status);
 
+  Serial.print("RODI Status: Off");
+  Serial.println();
+  Serial.println();
+}
 
 if(TankLevel == TANKSTATUS_LOWLOW && status == RODISTATUS_OFF)
-      status = InitialFlush;
-      RODISystemStatus(status);
-
-
-    Serial.print("RODI Status: Off");
-    Serial.println();
-    Serial.println();
-
-
-
-currenttime = now() - initialtime;
-if(currenttime >= InitialFlushTime && status == RODISTATUS_INITIALFLUSH)
-    status = RODISTATUS_RUNNING;
-    RODISystemStatus(status);
-
-
-if(currenttime <= InitialFlushTime && RODI == InitialFlush)
-  {
-  
-  
-  currenttime = now() - initialtime;
+{
+  status = RODISTATUS_INITIALFLUSH;
+  RODISystemStatus(status);
 
   Serial.print("RODI Status: InitialFlush");
   Serial.println();
   Serial.print(currenttime);
   Serial.println();
   Serial.println();
-
-  }
-  if(currenttime >= InitialFlushTime)
-    RODI = Running;
-  return RODI;
 }
 
-int RODIFlushing(){
-  initialtime = now();
-  currenttime = now() - initialtime;
-  while(currenttime <= FlushTime && RODI == Flushing)
-  {
-  
-  TankLevelStatus = TankStatusRead();
-  PressureSwitch = PressureSwitchRead();
-  if(TankLevelStatus == High)
-    RODI = Off; 
-  if(TankLevelStatus == HighHigh)
-    RODI = Off;
-  if(PressureSwitch == true)
-    RODI = Off;
-  currenttime = now() - initialtime;
+currenttime = now() - initialtime;
 
-  Serial.print("RODI Status: Flushing");
-  Serial.println();
-  Serial.print(currenttime);
-  Serial.println();
-  Serial.println();
-
-  }
-  if(currenttime >= FlushTime)
-    RODI = Running;
-  return RODI;
-}
-
-int RODIRunning(){
-  initialtime = now();
-  currenttime = now() - initialtime;
-  while(currenttime <= RunTime && RODI == Running)
-  {
-  
-  TankLevelStatus = TankStatusRead();
-  PressureSwitch = PressureSwitchRead();
-  if(TankLevelStatus == High)
-    RODI = Off; 
-  if(TankLevelStatus == HighHigh)
-    RODI = Off;
-  if(PressureSwitch == true)
-    RODI = Off;
-  currenttime = now() - initialtime;
+if(currenttime >= InitialFlushTime && status == RODISTATUS_INITIALFLUSH)
+{
+  status = RODISTATUS_RUNNING;
+  RODISystemStatus(status);
 
   Serial.print("RODI Status: Running");
   Serial.println();
   Serial.print(currenttime);
   Serial.println();
   Serial.println();
+}
 
-  }
-  if(currenttime >= RunTime)
-    RODI = Flushing;
-  return RODI;
+if(currenttime >= FlushTime && status == RODISTATUS_FLUSHING)
+{
+  status = RODISTATUS_RUNNING;
+  RODISystemStatus(status);
+
+  Serial.print("RODI Status: Running");
+  Serial.println();
+  Serial.print(currenttime);
+  Serial.println();
+  Serial.println();
+}
+
+if(currenttime >= RunTime && status == RODISTATUS_RUNNING)
+{
+  status = RODISTATUS_FLUSHING;
+  RODISystemStatus(status);
+
+  Serial.print("RODI Status: Flushing");
+  Serial.println();
+  Serial.print(currenttime);
+  Serial.println();
+  Serial.println();
 }
