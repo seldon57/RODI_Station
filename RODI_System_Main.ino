@@ -10,6 +10,9 @@
 int trigPin;    //Pin on Arduino that will be used to trigger the HC-SR04
 int echoPin;    //Pin on Arduino that will be used to echo the HC-SR04
 int PressureSwitchPin;
+int RODIInitialFlushTime = 120;
+int RODIFlushTime = 30;
+int RODIRunTime = 3600;
 
 TankStatus TankLevelStatus(TankStatus level, float percent, float distToWater);
 
