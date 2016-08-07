@@ -1,11 +1,48 @@
+void RODISystemStatus(RODIStatus status)
+{
+    switch (status)      
+        case RODISTATUS_OFF:
+            digitalWrite(FeedSolenoidPin, HIGH);
+            digitalWrite(FlushSolenoidPin, HIGH);
+            digitalWrite(TankSolenoidPin, HIGH);
+            digitalWrite(BoosterPumpPin, HIGH);
+            break;
+        case RODISTATUS_INITIALFLUSH:
+            digitalWrite(FeedSolenoidPin, LOW);
+            digitalWrite(FlushSolenoidPin, LOW);
+            digitalWrite(TankSolenoidPin, LOW);
+            digitalWrite(BoosterPumpPin, LOW);
+            break;
+        case RODISTATUS_FLUSHING:
+            digitalWrite(FeedSolenoidPin, LOW);
+            digitalWrite(FlushSolenoidPin, LOW);
+            digitalWrite(TankSolenoidPin, LOW);
+            digitalWrite(BoosterPumpPin, LOW);
+            break;
+        case RODISTATUS_RUNNING:
+            digitalWrite(FeedSolenoidPin, LOW);
+            digitalWrite(FlushSolenoidPin, HIGH);
+            digitalWrite(TankSolenoidPin, LOW);
+            digitalWrite(BoosterPumpPin, LOW);
+            break;
+        default:
+            std::cout << "Unknown";
+            break;
+    }
+}
+
+
+TankLevel
+status
+
+if(TankLevel == TANKSTATUS_LOWLOW && status == RODISTATUS_OFF)
+      status = InitialFlush;
+
 
 int RODIOff(){			
   while(RODI == Off)
   {
-    digitalWrite(FeedSolenoidPin, HIGH);
-    digitalWrite(FlushSolenoidPin, HIGH);
-    digitalWrite(TankSolenoidPin, HIGH);
-    digitalWrite(BoosterPumpPin, HIGH);
+    
     TankLevelStatus = TankStatusRead();
     if(TankLevelStatus == LowLow)
       RODI = InitialFlush;
@@ -23,10 +60,7 @@ int RODIInitialFlush(){
   currenttime = now() - initialtime;
   while(currenttime <= InitialFlushTime && RODI == InitialFlush)
   {
-  digitalWrite(FeedSolenoidPin, LOW);
-  digitalWrite(FlushSolenoidPin, LOW);
-  digitalWrite(TankSolenoidPin, LOW);
-  digitalWrite(BoosterPumpPin, LOW);
+  
   TankLevelStatus = TankStatusRead();
   PressureSwitch = PressureSwitchRead();
   if(TankLevelStatus == High)
@@ -54,10 +88,7 @@ int RODIFlushing(){
   currenttime = now() - initialtime;
   while(currenttime <= FlushTime && RODI == Flushing)
   {
-  digitalWrite(FeedSolenoidPin, LOW);
-  digitalWrite(FlushSolenoidPin, LOW);
-  digitalWrite(TankSolenoidPin, LOW);
-  digitalWrite(BoosterPumpPin, LOW);
+  
   TankLevelStatus = TankStatusRead();
   PressureSwitch = PressureSwitchRead();
   if(TankLevelStatus == High)
@@ -85,10 +116,7 @@ int RODIRunning(){
   currenttime = now() - initialtime;
   while(currenttime <= RunTime && RODI == Running)
   {
-  digitalWrite(FeedSolenoidPin, LOW);
-  digitalWrite(FlushSolenoidPin, HIGH);
-  digitalWrite(TankSolenoidPin, LOW);
-  digitalWrite(BoosterPumpPin, LOW);
+  
   TankLevelStatus = TankStatusRead();
   PressureSwitch = PressureSwitchRead();
   if(TankLevelStatus == High)
