@@ -35,30 +35,40 @@ void RODISystemStatus(RODIStatus status)
 TankLevel
 status
 
+Initialize status and initialStatus
+
+if(initialStatus != status)
+  initialtime = now();
+
+TankLevelStatus = TankStatusRead();
+PressureSwitch = PressureSwitchRead();
+
+if(TankLevelStatus == High)
+    status = RODISTATUS_OFF; 
+if(TankLevelStatus == HighHigh)
+    status = RODISTATUS_OFF;
+if(PressureSwitch == true)
+    status = RODISTATUS_OFF;
+    RODISystemStatus(status);
+
+
 if(TankLevel == TANKSTATUS_LOWLOW && status == RODISTATUS_OFF)
       status = InitialFlush;
+      RODISystemStatus(status);
 
-
-int RODIOff(){			
-  while(RODI == Off)
-  {
-    
-    TankLevelStatus = TankStatusRead();
-    if(TankLevelStatus == LowLow)
-      RODI = InitialFlush;
 
     Serial.print("RODI Status: Off");
     Serial.println();
     Serial.println();
 
-  }
-  return RODI;
-}
 
-int RODIInitialFlush(){
-  initialtime = now();
-  currenttime = now() - initialtime;
-  while(currenttime <= InitialFlushTime && RODI == InitialFlush)
+
+currenttime = now() - initialtime;
+if(currenttime >= InitialFlushTime)
+    RODI = Running;
+
+
+if(currenttime <= InitialFlushTime && RODI == InitialFlush)
   {
   
   TankLevelStatus = TankStatusRead();
