@@ -64,21 +64,15 @@ if(TankLevel == TANKSTATUS_LOWLOW && status == RODISTATUS_OFF)
 
 
 currenttime = now() - initialtime;
-if(currenttime >= InitialFlushTime)
-    RODI = Running;
+if(currenttime >= InitialFlushTime && status == RODISTATUS_INITIALFLUSH)
+    status = RODISTATUS_RUNNING;
+    RODISystemStatus(status);
 
 
 if(currenttime <= InitialFlushTime && RODI == InitialFlush)
   {
   
-  TankLevelStatus = TankStatusRead();
-  PressureSwitch = PressureSwitchRead();
-  if(TankLevelStatus == High)
-    RODI = Off; 
-  if(TankLevelStatus == HighHigh)
-    RODI = Off;
-  if(PressureSwitch == true)
-    RODI = Off;
+  
   currenttime = now() - initialtime;
 
   Serial.print("RODI Status: InitialFlush");
