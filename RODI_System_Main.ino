@@ -28,6 +28,8 @@ void SerialDiagnostics(float value1);
 
 RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool PressureSwitch, time InitialTime);
 
+void RODIOperation(RODIStatus status);
+
 
 enum TankStatus
 {
@@ -81,9 +83,14 @@ void loop()
   status = RODISTATUS_OFF;
 
   if(initialStatus != status)
+  {
     InitialTime = now();
+    initialStatus = status;
+  } 
 
   status = RODIOperationalStatus(status, TankLevel, PressureSwitch, InitialTime);
+
+  RODIOperation(status);
 
 
 
