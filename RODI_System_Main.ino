@@ -69,11 +69,25 @@ void loop()
 
   float distToWater;  //Distance in mm
   distToWater = HCSR04Read(trigPin,echoPin);
+  
   float percent;
   percent = WaterLevelPercent (TankHeight, distToWater);
+  
   TankLevel = TankLevelStatus(TankLevel, Percent, distToWater);
 
-  SerialDiagnostics(distToWater);
+  PressureSwitch = PressureSwitchRead(PressureSwitchPin);
+
+  initialStatus = RODISTATUS_OFF;
+  status = RODISTATUS_OFF;
+
+  if(initialStatus != status)
+    InitialTime = now();
+
+  status = RODIOperationalStatus(status, TankLevel, PressureSwitch, InitialTime);
+
+
+
+  //SerialDiagnostics(distToWater);
 
 
   
