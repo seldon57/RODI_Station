@@ -14,6 +14,8 @@ int RODIInitialFlushTime = 120;
 int RODIFlushTime = 30;
 int RODIRunTime = 3600;
 
+time InitialTime;
+
 TankStatus TankLevelStatus(TankStatus level, float percent, float distToWater);
 
 float TankHeight = 850.0;	// Height of the tank in mm from the bottom to the sensor
@@ -23,6 +25,9 @@ float WaterLevelPercent (float TankHeight, float distToWater);
 bool PressureSwitchRead(int PressureSwitchPin);
 
 void SerialDiagnostics(float value1);
+
+RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool PressureSwitch, time InitialTime);
+
 
 enum TankStatus
 {
