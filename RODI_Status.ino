@@ -26,32 +26,39 @@ void RODISystemStatus(RODIStatus status)
             digitalWrite(BoosterPumpPin, LOW);
             break;
         default:
-            std::cout << "Unknown";
+            digitalWrite(FeedSolenoidPin, HIGH);
+            digitalWrite(FlushSolenoidPin, HIGH);
+            digitalWrite(TankSolenoidPin, HIGH);
+            digitalWrite(BoosterPumpPin, HIGH);
+
+            Serial.print("Invalid System Status");
+            Serial.println();
+            Serial.println();
             break;
     }
 }
 
 
-TankLevel
-status
+RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool PressureSwitch, time InitialTime)
+{
+
 
 Initialize status and initialStatus to off
 
 if(initialStatus != status)
-  initialtime = now();
+  InitialTime = now();
 
-TankLevelStatus = TankStatusRead();
-PressureSwitch = PressureSwitchRead();
+  time CurrentTime;
 
-if(TankLevelStatus == High || TankLevelStatus == HighHigh || PressureSwitch == true)
-{
-  status = RODISTATUS_OFF;
-  RODISystemStatus(status);
+  if(TankLevel == TANKSTATUS_HIGH || TankLevel == TANKSTATUS_HIGHHIGH || PressureSwitch == true)
+  {
+    status = RODISTATUS_OFF;
+    RODISystemStatus(status);
 
-  Serial.print("RODI Status: Off");
-  Serial.println();
-  Serial.println();
-}
+    Serial.print("RODI Status: Off");
+    Serial.println();
+    Serial.println();
+  }
 
 if(TankLevel == TANKSTATUS_LOWLOW && status == RODISTATUS_OFF)
 {
@@ -65,9 +72,9 @@ if(TankLevel == TANKSTATUS_LOWLOW && status == RODISTATUS_OFF)
   Serial.println();
 }
 
-currenttime = now() - initialtime;
+CurrentTime = now() - InitialTime;
 
-if(currenttime >= InitialFlushTime && status == RODISTATUS_INITIALFLUSH)
+if(CurrentTime >= InitialFlushTime && status == RODISTATUS_INITIALFLUSH)
 {
   status = RODISTATUS_RUNNING;
   RODISystemStatus(status);
@@ -79,7 +86,7 @@ if(currenttime >= InitialFlushTime && status == RODISTATUS_INITIALFLUSH)
   Serial.println();
 }
 
-if(currenttime >= FlushTime && status == RODISTATUS_FLUSHING)
+if(CurrentTime >= FlushTime && status == RODISTATUS_FLUSHING)
 {
   status = RODISTATUS_RUNNING;
   RODISystemStatus(status);
@@ -91,7 +98,7 @@ if(currenttime >= FlushTime && status == RODISTATUS_FLUSHING)
   Serial.println();
 }
 
-if(currenttime >= RunTime && status == RODISTATUS_RUNNING)
+if(CurrentTime >= RunTime && status == RODISTATUS_RUNNING)
 {
   status = RODISTATUS_FLUSHING;
   RODISystemStatus(status);
@@ -101,4 +108,7 @@ if(currenttime >= RunTime && status == RODISTATUS_RUNNING)
   Serial.print(currenttime);
   Serial.println();
   Serial.println();
+}
+
+  return status;
 }
