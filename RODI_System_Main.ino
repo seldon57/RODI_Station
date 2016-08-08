@@ -7,6 +7,9 @@
 *
 */
 
+#include <Time.h>
+#include <TimeLib.h>
+
 int trigPin;    //Pin on Arduino that will be used to trigger the HC-SR04
 int echoPin;    //Pin on Arduino that will be used to echo the HC-SR04
 int PressureSwitchPin;
@@ -14,7 +17,7 @@ int RODIInitialFlushTime = 120;
 int RODIFlushTime = 30;
 int RODIRunTime = 3600;
 
-time InitialTime;
+time_h InitialTime;
 
 RODIStatus initialStatus;
 RODIStatus status;
@@ -29,7 +32,7 @@ bool PressureSwitchRead(int PressureSwitchPin);
 
 void SerialDiagnostics(float value1);
 
-RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool PressureSwitch, time InitialTime);
+RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool PressureSwitch, time_h InitialTime);
 
 void RODIOperation(RODIStatus status);
 
