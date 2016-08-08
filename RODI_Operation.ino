@@ -1,4 +1,4 @@
-void RODISystemStatus(RODIStatus status)
+void RODIOperation(RODIStatus status)
 {
     switch (status)      
         case RODISTATUS_OFF:
