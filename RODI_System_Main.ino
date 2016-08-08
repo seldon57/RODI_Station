@@ -16,6 +16,9 @@ int RODIRunTime = 3600;
 
 time InitialTime;
 
+RODIStatus initialStatus;
+RODIStatus status;
+
 TankStatus TankLevelStatus(TankStatus level, float percent, float distToWater);
 
 float TankHeight = 850.0;	// Height of the tank in mm from the bottom to the sensor
@@ -63,11 +66,18 @@ void setup()
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   pinMode(PressureSwitchPin, INPUT);
+
+  initialStatus = RODISTATUS_OFF;
+  status = RODISTATUS_OFF;
+
+  InitialTime = now();
   
 }
 
 void loop() 
 {
+
+  PressureSwitch = PressureSwitchRead(PressureSwitchPin);
 
   float distToWater;  //Distance in mm
   distToWater = HCSR04Read(trigPin,echoPin);
@@ -77,11 +87,6 @@ void loop()
   
   TankLevel = TankLevelStatus(TankLevel, Percent, distToWater);
 
-  PressureSwitch = PressureSwitchRead(PressureSwitchPin);
-
-  initialStatus = RODISTATUS_OFF;
-  status = RODISTATUS_OFF;
-
   if(initialStatus != status)
   {
     InitialTime = now();
@@ -89,8 +94,6 @@ void loop()
   } 
 
   status = RODIOperationalStatus(status, TankLevel, PressureSwitch, InitialTime);
-
-  RODIOperation(status);
 
 
 
