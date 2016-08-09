@@ -1,7 +1,8 @@
 void RODIOperation(RODIStatus status)
 {
     switch (status)      
-        case RODISTATUS_OFF:
+    {
+      case RODISTATUS_OFF:
             digitalWrite(FeedSolenoidPin, HIGH);
             digitalWrite(FlushSolenoidPin, HIGH);
             digitalWrite(TankSolenoidPin, HIGH);

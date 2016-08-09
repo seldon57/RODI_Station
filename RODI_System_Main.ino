@@ -13,29 +13,19 @@
 int trigPin;    //Pin on Arduino that will be used to trigger the HC-SR04
 int echoPin;    //Pin on Arduino that will be used to echo the HC-SR04
 int PressureSwitchPin;
+
+int FeedSolenoidPin;
+int FlushSolenoidPin;
+int TankSolenoidPin;
+int BoosterPumpPin;
+
 int RODIInitialFlushTime = 120;
 int RODIFlushTime = 30;
 int RODIRunTime = 3600;
 
-time_h InitialTime;
+float TankHeight = 850.0;  // Height of the tank in mm from the bottom to the sensor
 
-RODIStatus initialStatus;
-RODIStatus status;
-
-TankStatus TankLevelStatus(TankStatus level, float percent, float distToWater);
-
-float TankHeight = 850.0;	// Height of the tank in mm from the bottom to the sensor
-float HCSR04Read(int trigPin, int echoPin);
-float WaterLevelPercent (float TankHeight, float distToWater);
-
-bool PressureSwitchRead(int PressureSwitchPin);
-
-void SerialDiagnostics(float value1);
-
-RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool PressureSwitch, time_h InitialTime);
-
-void RODIOperation(RODIStatus status);
-
+time_t InitialTime;
 
 enum TankStatus
 {
@@ -54,6 +44,26 @@ enum RODIStatus
     RODISTATUS_RUNNING
 };
 
+RODIStatus initialStatus;
+RODIStatus status;
+
+TankStatus TankLevelStatus(TankStatus level, float percent, float distToWater);
+
+float HCSR04Read(int trigPin, int echoPin);
+
+float WaterLevelPercent (float TankHeight, float distToWater);
+
+bool PressureSwitchRead(int PressureSwitchPin);
+
+void SerialDiagnostics(float value1);
+
+RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool PressureSwitch, time_t InitialTime);
+
+void RODIOperation(RODIStatus status);
+
+
+
+
 void setup() 
 {
 
@@ -64,6 +74,10 @@ void setup()
   trigPin = 4;
   echoPin = 5;
   PressureSwitchPin = 6;
+  FeedSolenoidPin = 7;
+  FlushSolenoidPin = 8;
+  TankSolenoidPin = 9;
+  BoosterPumpPin = 10;
   
   //Define inputs and outputs
   pinMode(trigPin, OUTPUT);
@@ -80,6 +94,7 @@ void setup()
 void loop() 
 {
 
+  bool PressureSwitch;
   PressureSwitch = PressureSwitchRead(PressureSwitchPin);
 
   float distToWater;  //Distance in mm
@@ -88,7 +103,8 @@ void loop()
   float percent;
   percent = WaterLevelPercent (TankHeight, distToWater);
   
-  TankLevel = TankLevelStatus(TankLevel, Percent, distToWater);
+  TankStatus TankLevel;
+  TankLevel = TankLevelStatus(TankLevel, percent, distToWater);
 
   if(initialStatus != status)
   {
