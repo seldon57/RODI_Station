@@ -61,7 +61,7 @@ bool PressureSwitchRead(int PressureSwitchPin);
 
 void SerialDiagnostics(float value1);
 
-RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool PressureSwitch, time_t InitialTime);
+RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool PressureSwitch, time_t InitialTime, time_t CurrentTime);
 
 void RODIOperation(RODIStatus status);
 
@@ -145,18 +145,18 @@ void loop()
     Serial.println();
   } 
 
-  status = RODIOperationalStatus(status, TankLevel, PressureSwitch, InitialTime);
+  time_t CurrentTime;
+  CurrentTime = now() - InitialTime;
 
-
+  status = RODIOperationalStatus(status, TankLevel, PressureSwitch, InitialTime, CurrentTime);
 
   //SerialDiagnostics(distToWater);
-
-
   
   //Serial.print("mm: ");
   //Serial.print(distToWater);
   //Serial.println();
   //Serial.println();
+
   delay(1000);
 
 }
