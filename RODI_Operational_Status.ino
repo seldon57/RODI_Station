@@ -12,9 +12,11 @@ RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool P
 
     Serial.print("RODI Status: Off");
     Serial.println();
+    Serial.print("Current Time: "); 
     Serial.print(CurrentTime);
     Serial.println();
     Serial.println();
+
     return status;
   }
 
@@ -25,9 +27,11 @@ RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool P
 
     Serial.print("RODI Status: InitialFlush");
     Serial.println();
+    Serial.print("Current Time: ");
     Serial.print(CurrentTime);
     Serial.println();
     Serial.println();
+
     return status;
   }
 
@@ -38,9 +42,11 @@ RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool P
 
     Serial.print("RODI Status: Running");
     Serial.println();
+    Serial.print("Current Time: ");
     Serial.print(CurrentTime);
     Serial.println();
     Serial.println();
+
     return status;
   }
 
@@ -51,9 +57,11 @@ RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool P
 
     Serial.print("RODI Status: Running");
     Serial.println();
+    Serial.print("Current Time: ");
     Serial.print(CurrentTime);
     Serial.println();
     Serial.println();
+
     return status;
   }
 
@@ -64,11 +72,18 @@ RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool P
 
     Serial.print("RODI Status: Flushing");
     Serial.println();
+    Serial.print("Current Time: ");
     Serial.print(CurrentTime);
     Serial.println();
     Serial.println();
+
     return status;
   }
+
+  Serial.print("Current Time: ");
+  Serial.print(CurrentTime);
+  Serial.println();
+  Serial.println();  
 
   break;
   
