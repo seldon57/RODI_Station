@@ -5,7 +5,7 @@ RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool P
   time_t CurrentTime;
   CurrentTime = now() - InitialTime;
 
-  if(TankLevel == TANKSTATUS_HIGH || TankLevel == TANKSTATUS_HIGHHIGH || PressureSwitch == true)
+  if(TankLevel == TANKSTATUS_HIGH || TankLevel == TANKSTATUS_HIGHHIGH || PressureSwitch == false)
   {
     status = RODISTATUS_OFF;
     RODIOperation(status);
@@ -15,6 +15,7 @@ RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool P
     Serial.print(CurrentTime);
     Serial.println();
     Serial.println();
+    return status;
   }
 
   if(TankLevel == TANKSTATUS_LOWLOW && status == RODISTATUS_OFF)
@@ -27,43 +28,46 @@ RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool P
     Serial.print(CurrentTime);
     Serial.println();
     Serial.println();
+    return status;
   }
 
-if(CurrentTime >= RODIInitialFlushTime && status == RODISTATUS_INITIALFLUSH)
-{
-  status = RODISTATUS_RUNNING;
-  RODIOperation(status);
+  if(CurrentTime >= RODIInitialFlushTime && status == RODISTATUS_INITIALFLUSH)
+  {
+    status = RODISTATUS_RUNNING;
+    RODIOperation(status);
 
-  Serial.print("RODI Status: Running");
-  Serial.println();
-  Serial.print(CurrentTime);
-  Serial.println();
-  Serial.println();
-}
+    Serial.print("RODI Status: Running");
+    Serial.println();
+    Serial.print(CurrentTime);
+    Serial.println();
+    Serial.println();
+    return status;
+  }
 
-if(CurrentTime >= RODIFlushTime && status == RODISTATUS_FLUSHING)
-{
-  status = RODISTATUS_RUNNING;
-  RODIOperation(status);
+  if(CurrentTime >= RODIFlushTime && status == RODISTATUS_FLUSHING)
+  {
+    status = RODISTATUS_RUNNING;
+    RODIOperation(status);
 
-  Serial.print("RODI Status: Running");
-  Serial.println();
-  Serial.print(CurrentTime);
-  Serial.println();
-  Serial.println();
-}
+    Serial.print("RODI Status: Running");
+    Serial.println();
+    Serial.print(CurrentTime);
+    Serial.println();
+    Serial.println();
+    return status;
+  }
 
-if(CurrentTime >= RODIRunTime && status == RODISTATUS_RUNNING)
-{
-  status = RODISTATUS_FLUSHING;
-  RODIOperation(status);
+  if(CurrentTime >= RODIRunTime && status == RODISTATUS_RUNNING)
+  {
+    status = RODISTATUS_FLUSHING;
+    RODIOperation(status);
 
-  Serial.print("RODI Status: Flushing");
-  Serial.println();
-  Serial.print(CurrentTime);
-  Serial.println();
-  Serial.println();
-}
-
-  return status;
+    Serial.print("RODI Status: Flushing");
+    Serial.println();
+    Serial.print(CurrentTime);
+    Serial.println();
+    Serial.println();
+    return status;
+  }
+  
 }

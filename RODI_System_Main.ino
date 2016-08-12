@@ -19,9 +19,13 @@ int FlushSolenoidPin;
 int TankSolenoidPin;
 int BoosterPumpPin;
 
-int RODIInitialFlushTime = 120;
-int RODIFlushTime = 30;
-int RODIRunTime = 3600;
+//int RODIInitialFlushTime = 120;
+//int RODIFlushTime = 30;
+//int RODIRunTime = 3600;
+
+int RODIInitialFlushTime = 10;
+int RODIFlushTime = 5;
+int RODIRunTime = 15;
 
 float TankHeight = 850.0;  // Height of the tank in mm from the bottom to the sensor
 
@@ -29,19 +33,19 @@ time_t InitialTime;
 
 enum TankStatus
 {
-    TANKSTATUS_LOWLOW,
-    TANKSTATUS_LOW,
-    TANKSTATUS_NORMAL,
-    TANKSTATUS_HIGH,
-    TANKSTATUS_HIGHHIGH
+    TANKSTATUS_LOWLOW,  //0
+    TANKSTATUS_LOW,     //1
+    TANKSTATUS_NORMAL,  //2
+    TANKSTATUS_HIGH,    //3
+    TANKSTATUS_HIGHHIGH //4
 };
 
 enum RODIStatus
 {
-    RODISTATUS_OFF,
-    RODISTATUS_INITIALFLUSH,
-    RODISTATUS_FLUSHING,
-    RODISTATUS_RUNNING
+    RODISTATUS_OFF,           //0
+    RODISTATUS_INITIALFLUSH,  //1
+    RODISTATUS_FLUSHING,      //2
+    RODISTATUS_RUNNING        //3
 };
 
 RODIStatus initialStatus;
@@ -82,7 +86,13 @@ void setup()
   //Define inputs and outputs
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
+  
   pinMode(PressureSwitchPin, INPUT);
+  
+  pinMode(FeedSolenoidPin, OUTPUT);
+  pinMode(FlushSolenoidPin, OUTPUT);
+  pinMode(TankSolenoidPin, OUTPUT);
+  pinMode(BoosterPumpPin, OUTPUT);
 
   initialStatus = RODISTATUS_OFF;
   status = RODISTATUS_OFF;
@@ -97,19 +107,42 @@ void loop()
   bool PressureSwitch;
   PressureSwitch = PressureSwitchRead(PressureSwitchPin);
 
+  Serial.print("Pressure Switch: ");
+  Serial.print(PressureSwitch);
+  Serial.println();
+  Serial.println();
+
   float distToWater;  //Distance in mm
   distToWater = HCSR04Read(trigPin,echoPin);
+
+  Serial.print("Distance to water (mm): ");
+  Serial.print(distToWater);
+  Serial.println();
+  Serial.println();
   
   float percent;
   percent = WaterLevelPercent (TankHeight, distToWater);
+
+  Serial.print("Percent Full: ");
+  Serial.print(percent);
+  Serial.println();
+  Serial.println();
   
   TankStatus TankLevel;
   TankLevel = TankLevelStatus(TankLevel, percent, distToWater);
+
+  Serial.print("Tank Level Status: ");
+  Serial.print(TankLevel);
+  Serial.println();
+  Serial.println();
 
   if(initialStatus != status)
   {
     InitialTime = now();
     initialStatus = status;
+    Serial.print("Initial Time Reset");
+    Serial.println();
+    Serial.println();
   } 
 
   status = RODIOperationalStatus(status, TankLevel, PressureSwitch, InitialTime);
@@ -124,6 +157,6 @@ void loop()
   //Serial.print(distToWater);
   //Serial.println();
   //Serial.println();
-  //delay(250);
+  delay(1000);
 
 }

@@ -2,9 +2,8 @@ float HCSR04Read(int trigPin,int echoPin)
 {
   
   float AvgDuration = 0;
-  int i;
 
-  for (i = 0; i < 5; i++)
+  for (int i = 0; i < 5; ++i)
   {
     // The sensor is triggered by a HIGH pulse of 10 or more microseconds.
     // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
