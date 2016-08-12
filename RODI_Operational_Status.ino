@@ -1,9 +1,6 @@
 
-RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool PressureSwitch, time_t InitialTime)
+RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool PressureSwitch, time_t InitialTime, time_t CurrentTime)
 {
-
-  time_t CurrentTime;
-  CurrentTime = now() - InitialTime;
 
   if(TankLevel == TANKSTATUS_HIGH || TankLevel == TANKSTATUS_HIGHHIGH || PressureSwitch == false)
   {
