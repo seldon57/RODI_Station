@@ -22,13 +22,9 @@ int FlushSolenoidPin;
 int TankSolenoidPin;
 int BoosterPumpPin;
 
-//int RODIInitialFlushTime = 120;
-//int RODIFlushTime = 30;
-//int RODIRunTime = 3600;
-
-int RODIInitialFlushTime = 30;
+int RODIInitialFlushTime = 120;
 int RODIFlushTime = 30;
-int RODIRunTime = 45;
+int RODIRunTime = 3600;
 
 float TankHeight = 850.0;  // Height of the tank in mm from the bottom to the sensor
 
