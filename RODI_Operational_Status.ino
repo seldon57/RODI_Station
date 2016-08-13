@@ -5,29 +5,33 @@ RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool P
   if(TankLevel == TANKSTATUS_HIGH || TankLevel == TANKSTATUS_HIGHHIGH || PressureSwitch == false)
   {
     status = RODISTATUS_OFF;
-    RODIOperation(status);
+    RODIOperation(status,FeedSolenoidPin,FlushSolenoidPin,TankSolenoidPin,BoosterPumpPin);
 
-    Serial.print("RODI Status: Off");
-    Serial.println();
-    Serial.print("Current Time: "); 
-    Serial.print(CurrentTime);
-    Serial.println();
-    Serial.println();
+    //Serial.print("RODI Status: Off");
+    //Serial.println();
+    //Serial.print("Current Time: "); 
+    //Serial.print(CurrentTime);
+    //Serial.println();
+    //Serial.println();
+    //Serial.println();
 
     return status;
   }
 
+void RODIOperation(RODIStatus status, int FeedSolenoidPin, int FlushSolenoidPin, int TankSolenoidPin, int BoosterPumpPin);
+
   if(TankLevel == TANKSTATUS_LOWLOW && status == RODISTATUS_OFF)
   {
     status = RODISTATUS_INITIALFLUSH;
-    RODIOperation(status);
+    RODIOperation(status,FeedSolenoidPin,FlushSolenoidPin,TankSolenoidPin,BoosterPumpPin);
 
-    Serial.print("RODI Status: InitialFlush");
-    Serial.println();
-    Serial.print("Current Time: ");
-    Serial.print(CurrentTime);
-    Serial.println();
-    Serial.println();
+    //Serial.print("RODI Status: InitialFlush");
+    //Serial.println();
+    //Serial.print("Current Time: ");
+    //Serial.print(CurrentTime);
+    //Serial.println();
+    //Serial.println();
+    //Serial.println();
 
     return status;
   }
@@ -35,14 +39,15 @@ RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool P
   if(CurrentTime >= RODIInitialFlushTime && status == RODISTATUS_INITIALFLUSH)
   {
     status = RODISTATUS_RUNNING;
-    RODIOperation(status);
+    RODIOperation(status,FeedSolenoidPin,FlushSolenoidPin,TankSolenoidPin,BoosterPumpPin);
 
-    Serial.print("RODI Status: Running");
-    Serial.println();
-    Serial.print("Current Time: ");
-    Serial.print(CurrentTime);
-    Serial.println();
-    Serial.println();
+    //Serial.print("RODI Status: Running");
+    //Serial.println();
+    //Serial.print("Current Time: ");
+    //Serial.print(CurrentTime);
+    //Serial.println();
+    //Serial.println();
+    //Serial.println();
 
     return status;
   }
@@ -50,14 +55,15 @@ RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool P
   if(CurrentTime >= RODIFlushTime && status == RODISTATUS_FLUSHING)
   {
     status = RODISTATUS_RUNNING;
-    RODIOperation(status);
+    RODIOperation(status,FeedSolenoidPin,FlushSolenoidPin,TankSolenoidPin,BoosterPumpPin);
 
-    Serial.print("RODI Status: Running");
-    Serial.println();
-    Serial.print("Current Time: ");
-    Serial.print(CurrentTime);
-    Serial.println();
-    Serial.println();
+    //Serial.print("RODI Status: Running");
+    //Serial.println();
+    //Serial.print("Current Time: ");
+    //Serial.print(CurrentTime);
+    //Serial.println();
+    //Serial.println();
+    //Serial.println();
 
     return status;
   }
@@ -65,23 +71,25 @@ RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool P
   if(CurrentTime >= RODIRunTime && status == RODISTATUS_RUNNING)
   {
     status = RODISTATUS_FLUSHING;
-    RODIOperation(status);
+    RODIOperation(status,FeedSolenoidPin,FlushSolenoidPin,TankSolenoidPin,BoosterPumpPin);
 
-    Serial.print("RODI Status: Flushing");
-    Serial.println();
-    Serial.print("Current Time: ");
-    Serial.print(CurrentTime);
-    Serial.println();
-    Serial.println();
+    //Serial.print("RODI Status: Flushing");
+    //Serial.println();
+    //Serial.print("Current Time: ");
+    //Serial.print(CurrentTime);
+    //Serial.println();
+    //Serial.println();
+    //Serial.println();
 
     return status;
   }
 
-  Serial.print("Current Time: ");
-  Serial.print(CurrentTime);
-  Serial.println();
-  Serial.println();  
+  //Serial.print("Current Time: ");
+  //Serial.print(CurrentTime);
+  //Serial.println();
+  //Serial.println();
+  //Serial.println();  
 
-  break;
+  return status;
   
 }

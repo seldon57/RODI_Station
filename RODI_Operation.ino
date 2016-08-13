@@ -1,4 +1,4 @@
-void RODIOperation(RODIStatus status)
+void RODIOperation(RODIStatus status, int FeedSolenoidPin, int FlushSolenoidPin, int TankSolenoidPin, int BoosterPumpPin)
 {
     switch (status)      
     {
@@ -7,24 +7,44 @@ void RODIOperation(RODIStatus status)
             digitalWrite(FlushSolenoidPin, HIGH);
             digitalWrite(TankSolenoidPin, HIGH);
             digitalWrite(BoosterPumpPin, HIGH);
+                        
+            Serial.print("off");
+            Serial.println();
+            Serial.println();
+            
             break;
         case RODISTATUS_INITIALFLUSH:
             digitalWrite(FeedSolenoidPin, LOW);
             digitalWrite(FlushSolenoidPin, LOW);
             digitalWrite(TankSolenoidPin, LOW);
             digitalWrite(BoosterPumpPin, LOW);
+                        
+            Serial.print("Iflush");
+            Serial.println();
+            Serial.println();
+            
             break;
         case RODISTATUS_FLUSHING:
             digitalWrite(FeedSolenoidPin, LOW);
             digitalWrite(FlushSolenoidPin, LOW);
             digitalWrite(TankSolenoidPin, LOW);
             digitalWrite(BoosterPumpPin, LOW);
+                        
+            Serial.print("flush");
+            Serial.println();
+            Serial.println();
+            
             break;
         case RODISTATUS_RUNNING:
             digitalWrite(FeedSolenoidPin, LOW);
             digitalWrite(FlushSolenoidPin, HIGH);
             digitalWrite(TankSolenoidPin, LOW);
             digitalWrite(BoosterPumpPin, LOW);
+            
+            Serial.print("Run");
+            Serial.println();
+            Serial.println();
+
             break;
         default:
             digitalWrite(FeedSolenoidPin, HIGH);
