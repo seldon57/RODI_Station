@@ -18,7 +18,7 @@ RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool P
     return status;
   }
   
-  if(TankLevel != TANKSTATUS_HIGH && TankLevel != TANKSTATUS_HIGHHIGH && RODIManualStart == true)
+  if(TankLevel != TANKSTATUS_HIGH && TankLevel != TANKSTATUS_HIGHHIGH && status == RODISTATUS_OFF && RODIManualStart == true)
   {
     status = RODISTATUS_INITIALFLUSH;
     RODIOperation(status,FeedSolenoidPin,FlushSolenoidPin,TankSolenoidPin,BoosterPumpPin);
