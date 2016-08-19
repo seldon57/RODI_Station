@@ -61,13 +61,13 @@ float HCSR04Read(int trigPin, int echoPin);
 float WaterLevelPercent (float TankHeight, float distToWater);
 
 bool PressureSwitchRead(int PressureSwitchPin);
+bool RODIManualStartSwitchRead(int RODIManualStartPin);
 
-RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool PressureSwitch, time_t InitialTime, time_t CurrentTime);
+RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool PressureSwitch, bool RODIManualStart, time_t InitialTime, time_t CurrentTime);
 
 void RODIOperation(RODIStatus status, int FeedSolenoidPin, int FlushSolenoidPin, int TankSolenoidPin, int BoosterPumpPin);
 
 void LCDOutput(TankStatus TankLevel, float percent, RODIStatus status, time_t CurrentTime);
-
 
 
 void setup() 
@@ -139,11 +139,14 @@ void loop()
 
   bool PressureSwitch;
   PressureSwitch = PressureSwitchRead(PressureSwitchPin);
-
+  
   //Serial.print("Pressure Switch: ");
   //Serial.print(PressureSwitch);
   //Serial.println();
   //Serial.println();
+  
+  bool RODIManualStart;
+  RODIManualStart = RODIManualStartSwitchRead(RODIManualStartPin);
 
   float distToWater;  //Distance in mm
   distToWater = HCSR04Read(trigPin,echoPin);
@@ -181,7 +184,7 @@ void loop()
   time_t CurrentTime;
   CurrentTime = now() - InitialTime;
 
-  status = RODIOperationalStatus(status, TankLevel, PressureSwitch, InitialTime, CurrentTime);
+  status = RODIOperationalStatus(status, TankLevel, PressureSwitch, RODIManualStart, InitialTime, CurrentTime);
 
   LCDOutput(TankLevel, percent, status, CurrentTime);
 
