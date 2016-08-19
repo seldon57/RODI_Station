@@ -13,11 +13,12 @@
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 
-int trigPin;    //Pin on Arduino that will be used to trigger the HC-SR04
-int echoPin;    //Pin on Arduino that will be used to echo the HC-SR04
-int PressureSwitchPin;
+int trigPin;            //Pin on Arduino that will be used to trigger the HC-SR04
+int echoPin;            //Pin on Arduino that will be used to echo the HC-SR04
+int PressureSwitchPin;  //Pin on Arduino that will be used to monitor the tank full pressure switch
+int RODIManualStartPin; //Pin on Arduino that will be used to manually start the RODI Cycle
 
-int FeedSolenoidPin;
+int FeedSolenoidPin;  
 int FlushSolenoidPin;
 int TankSolenoidPin;
 int BoosterPumpPin;
@@ -85,12 +86,14 @@ void setup()
   FlushSolenoidPin = 8;
   TankSolenoidPin = 9;
   BoosterPumpPin = 10;
+  RODIManualStartPin = 11;
   
   //Define inputs and outputs
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   
   pinMode(PressureSwitchPin, INPUT);
+  pinMode(RODIManualStartPin, INPUT);
   
   pinMode(FeedSolenoidPin, OUTPUT);
   pinMode(FlushSolenoidPin, OUTPUT);
