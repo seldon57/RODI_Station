@@ -26,7 +26,7 @@ int RODIInitialFlushTime = 120;
 int RODIFlushTime = 30;
 int RODIRunTime = 3600;
 
-float TankHeight = 850.0;  // Height of the tank in mm from the bottom to the sensor
+float TankHeight = 870.0;  // Height of the tank in mm from the bottom to the sensor
 
 time_t InitialTime;
 
@@ -145,10 +145,10 @@ void loop()
   float distToWater;  //Distance in mm
   distToWater = HCSR04Read(trigPin,echoPin);
 
-  //Serial.print("Distance to water (mm): ");
-  //Serial.print(distToWater);
-  //Serial.println();
-  //Serial.println();
+  Serial.print("Distance to water (mm): ");
+  Serial.print(distToWater);
+  Serial.println();
+  Serial.println();
   
   float percent;
   percent = WaterLevelPercent (TankHeight, distToWater);
