@@ -1,5 +1,5 @@
 
-RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool PressureSwitch, time_t InitialTime, time_t CurrentTime)
+RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool PressureSwitch, bool RODIManualStart, time_t InitialTime, time_t CurrentTime)
 {
 
   if(TankLevel == TANKSTATUS_HIGH || TankLevel == TANKSTATUS_HIGHHIGH || PressureSwitch == false)
@@ -17,8 +17,13 @@ RODIStatus RODIOperationalStatus(RODIStatus status, TankStatus TankLevel, bool P
 
     return status;
   }
-
-void RODIOperation(RODIStatus status, int FeedSolenoidPin, int FlushSolenoidPin, int TankSolenoidPin, int BoosterPumpPin);
+  
+  if(TankLevel != TANKSTATUS_HIGH && TankLevel != TANKSTATUS_HIGHHIGH && RODIManualStart == true)
+  {
+    status = RODISTATUS_INITIALFLUSH;
+    RODIOperation(status,FeedSolenoidPin,FlushSolenoidPin,TankSolenoidPin,BoosterPumpPin);
+    return status;
+  }
 
   if(TankLevel == TANKSTATUS_LOWLOW && status == RODISTATUS_OFF)
   {
