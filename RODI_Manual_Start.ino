@@ -1,4 +1,4 @@
-bool RODIManualStartSwitchRead(RODIManualStartPin)
+bool RODIManualStartSwitchRead(int RODIManualStartPin)
 {
   if(digitalRead(RODIManualStartPin) == LOW) //LOW for a normally open switch
   { 
